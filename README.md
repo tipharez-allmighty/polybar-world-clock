@@ -40,7 +40,7 @@ click-middle = kill -USR2 %pid%
 modules-right = cpu memory world-clock
 ```
 
-**4. Restart polybar** (e.g. run your launch script again, or `polybar-msg cmd restart`).
+**4. Restart polybar**, e.g. by running your launch script again (or `polybar-msg cmd restart` if your bar has `enable-ipc = true`).
 
 To check your zones before adding them, run the script in a terminal; it prints the first zone, or an error for a mistyped one (Ctrl+C to stop):
 
