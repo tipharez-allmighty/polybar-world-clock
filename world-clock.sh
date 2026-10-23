@@ -34,14 +34,22 @@ shift $((OPTIND - 1))
 
 (( $# > 0 )) || usage
 
+# date silently falls back to UTC on unknown zones, so check up front.
+# Valid: a file in the zoneinfo database (Europe/Paris, UTC, EST5EDT),
+# or a POSIX TZ string without a slash (UTC-0, CET-1CEST, <+08>-8).
+zoneinfo=${TZDIR:-/usr/share/zoneinfo}
+posix_tz='^(<[^>]+>|[A-Za-z]{3,})[+-]?[0-9]'
+valid_zone() {
+	[[ -f $zoneinfo/$1 ]] || [[ $1 != */* && $1 =~ $posix_tz ]]
+}
+
 zones=()
 labels=()
 for arg in "$@"; do
 	zone=${arg%%:*}
 	label=${arg#*:}
 	[[ $arg == *:* ]] || label=${zone##*/}
-	# date silently falls back to UTC on unknown zones, so check up front
-	if [[ ! -e /usr/share/zoneinfo/$zone ]]; then
+	if ! valid_zone "$zone"; then
 		echo "world-clock: unknown zone '$zone'"
 		exit 1
 	fi

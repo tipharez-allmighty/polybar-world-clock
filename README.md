@@ -42,7 +42,7 @@ world-clock.sh [-s FORMAT] [-l FORMAT] [-i SECONDS] ZONE[:LABEL]...
 
 | Argument | Meaning | Default |
 |---|---|---|
-| `ZONE` | An IANA time zone, e.g. `Europe/Paris` (see `/usr/share/zoneinfo`) | |
+| `ZONE` | An IANA time zone, e.g. `Europe/Paris` (see `timedatectl list-timezones`), or a POSIX TZ string such as `UTC-0` or `CET-1CEST` | |
 | `LABEL` | Text shown after the time | city part of the zone, e.g. `Paris` |
 | `-s FORMAT` | Short format, shown by default | `%a %H:%M` |
 | `-l FORMAT` | Long format, shown after a middle click | `%a %d.%m.%Oy %H:%M` |
@@ -50,7 +50,11 @@ world-clock.sh [-s FORMAT] [-l FORMAT] [-i SECONDS] ZONE[:LABEL]...
 
 Formats use `date` syntax (see `man date`). Weekday and month names follow your locale (`LC_TIME`).
 
-The first zone is shown at start. An unknown zone prints an error instead of silently showing UTC.
+The first zone is shown at start.
+
+Zones are checked at start: a typo like `Europe/Pari` prints `world-clock: unknown zone 'Europe/Pari'` on the bar,
+instead of `date` silently showing UTC under your label. Zone files are looked up in `$TZDIR` if set,
+otherwise in `/usr/share/zoneinfo`.
 
 ### Examples
 
