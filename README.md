@@ -13,14 +13,15 @@ Plain POSIX `sh`: needs no bash, only `date` and `sleep`.
 
 ## Install
 
-Copy the script into your polybar scripts folder and make it executable:
+**1. Download the script** into your polybar scripts folder and make it executable:
 
 ```sh
-cp world-clock.sh ~/.config/polybar/scripts/
+mkdir -p ~/.config/polybar/scripts
+curl -fLo ~/.config/polybar/scripts/world-clock.sh https://raw.githubusercontent.com/tipharez-allmighty/polybar-world-clock/main/world-clock.sh
 chmod +x ~/.config/polybar/scripts/world-clock.sh
 ```
 
-Add a module to your polybar config:
+**2. Add the module** to your polybar config (usually `~/.config/polybar/config.ini`), with your own zones and labels:
 
 ```ini
 [module/world-clock]
@@ -31,8 +32,21 @@ click-left = kill -USR1 %pid%
 click-middle = kill -USR2 %pid%
 ```
 
-Then add `world-clock` to `modules-left`, `modules-center` or `modules-right` of your bar.
 `tail = true` is required: the script keeps running and polybar passes its PID as `%pid%`.
+
+**3. Put it on your bar** by adding `world-clock` to `modules-left`, `modules-center` or `modules-right` in your `[bar/...]` section, e.g.:
+
+```ini
+modules-right = cpu memory world-clock
+```
+
+**4. Restart polybar** (e.g. run your launch script again, or `polybar-msg cmd restart`).
+
+To check your zones before adding them, run the script in a terminal; it prints the first zone, or an error for a mistyped one (Ctrl+C to stop):
+
+```sh
+~/.config/polybar/scripts/world-clock.sh Europe/Paris America/New_York
+```
 
 ## Options
 
