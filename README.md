@@ -9,7 +9,7 @@ A polybar clock that cycles through time zones when you click it.
 - Clicks update the clock immediately
 - Daylight saving time is handled for you; labels can be anything, e.g. city names in any language
 
-Requires only `bash` and `date` (coreutils).
+Plain POSIX `sh`: needs no bash, only `date` and `sleep`.
 
 ## Install
 
@@ -45,7 +45,7 @@ world-clock.sh [-s FORMAT] [-l FORMAT] [-i SECONDS] ZONE[:LABEL]...
 | `ZONE` | An IANA time zone, e.g. `Europe/Paris` (see `timedatectl list-timezones`), or a POSIX TZ string such as `UTC-0` or `CET-1CEST` | |
 | `LABEL` | Text shown after the time | city part of the zone, e.g. `Paris` |
 | `-s FORMAT` | Short format, shown by default | `%a %H:%M` |
-| `-l FORMAT` | Long format, shown after a middle click | `%a %d.%m.%Oy %H:%M` |
+| `-l FORMAT` | Long format, shown after a middle click | `%a %d.%m.%y %H:%M` |
 | `-i SECONDS` | How often to refresh | `5` |
 
 Formats use `date` syntax (see `man date`). Weekday and month names follow your locale (`LC_TIME`).
